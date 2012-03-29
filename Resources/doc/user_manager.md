@@ -64,6 +64,7 @@ then persist the changes.
 ``` php
 <?php
 //...
+
 $user = $userManager->createUser();
 $user->setUsername('John');
 $user->setEmail('john.doe@example.com');
@@ -90,12 +91,12 @@ fos_user:
 Or if you prefer XML:
 
 ``` xml
-# app/config/config.xml
+<!-- app/config/config.xml -->
 <fos_user:config
-    db-driver="orm"
-    firewall-name="main"
-    use-listener="false"
-    user-class="MyProject\MyBundle\Entity\User"
+    db-driver     = "orm"
+    firewall-name = "main"
+    use-listener  = "false"
+    user-class    = "MyProject\MyBundle\Entity\User"
 />
 ```
 
@@ -116,6 +117,7 @@ An ORM example:
 
 ``` php
 <?php
+
 public function MainController extends Controller
 {
     public function updateAction($id)
