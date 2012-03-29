@@ -18,8 +18,9 @@ name as well as their username, email and password. Below is an example `$name`
 property and its validators.
 
 ``` php
-// src/Acme/UserBundle/Entity/User.php
 <?php
+
+// src/Acme/UserBundle/Entity/User.php
 
 use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
@@ -62,8 +63,9 @@ class extends the base FOSUserBundle `RegistrationFormType` and then adds the
 custom `name` field.
 
 ``` php
-// src/Acme/UserBundle/Form/Type/RegistrationFormType.php
 <?php
+
+// src/Acme/UserBundle/Form/Type/RegistrationFormType.php
 
 namespace Acme\UserBundle\Form\Type;
 
@@ -97,6 +99,7 @@ Below is an example of configuring your form type as a service in XML:
 
 ``` xml
 <!-- src/Acme/UserBundle/Resources/config/services.xml -->
+
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <container xmlns="http://symfony.com/schema/dic/services"
@@ -119,6 +122,7 @@ Or if you prefer YAML:
 
 ``` yaml
 # src/Acme/UserBundle/Resources/config/services.yml
+
 services:
     acme_user.registration.form.type:
         class: Acme\UserBundle\Form\Type\RegistrationFormType
@@ -140,6 +144,7 @@ changing the registration form type in YAML.
 
 ``` yaml
 # app/config/config.yml
+
 fos_user:
     # ...
     registration:
@@ -168,8 +173,9 @@ user registration. First you need to create a new class that extends
 protected `onSuccess` method.
 
 ``` php
-// src/Acme/UserBundle/Form/Handler/RegistrationFormHandler.php
 <?php
+
+// src/Acme/UserBundle/Form/Handler/RegistrationFormHandler.php
 
 namespace Acme\UserBundle\Form\Handler;
 
@@ -202,8 +208,9 @@ data and validating it, as well as implementing the logic required upon a
 successful submission.
 
 ``` php
-// src/Acme/UserBundle/Form/Handler/RegistrationFormHandler.php
 <?php
+
+// src/Acme/UserBundle/Form/Handler/RegistrationFormHandler.php
 
 namespace Acme\UserBundle\Form\Handler;
 
@@ -216,8 +223,9 @@ class RegistrationFormHandler extends BaseHandler
         $user = $this->userManager->createUser();
         $this->form->setData($user);
 
-        if ('POST' == $this->request->getMethod()) {
+        if ('POST' === $this->request->getMethod()) {
             $this->form->bindRequest($this->request);
+            
             if ($this->form->isValid()) {
 
                 // do your custom logic here
@@ -242,6 +250,7 @@ configuring your form handler as a service in XML:
 
 ``` xml
 <!-- src/Acme/UserBundle/Resources/config/services.xml -->
+
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <container xmlns="http://symfony.com/schema/dic/services"
@@ -266,12 +275,13 @@ Or if you prefer YAML:
 
 ``` yaml
 # src/Acme/UserBundle/Resources/config/services.yml
+
 services:
     acme_user.form.handler.registration:
-        class: Acme\UserBundle\Form\Handler\RegistrationFormHandler
+        class:     Acme\UserBundle\Form\Handler\RegistrationFormHandler
         arguments: ["@fos_user.registration.form", "@request", "@fos_user.user_manager", "@fos_user.mailer"]
-        scope: request
-        public: false
+        scope:     request
+        public:    false
 ```
 
 Here you have injected other services as arguments to the constructor of our class
@@ -283,6 +293,7 @@ left to do is update the FOSUserBundle configuration.
 
 ``` yaml
 # app/config/config.yml
+
 fos_user:
     # ...
     registration:
