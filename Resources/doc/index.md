@@ -20,7 +20,7 @@ sure you have translator enabled in your config.
 # app/config/config.yml
 
 framework:
-    translator:      { fallback: %locale% }
+    translator: ~
 ```
 
 For more information about translations, check [Symfony documentation](http://symfony.com/doc/2.0/book/translation.html).
@@ -55,7 +55,7 @@ Add the following lines in your `deps` file:
 
 [FOSUserBundle]
     git=git://github.com/FriendsOfSymfony/FOSUserBundle.git
-    target=/bundles/FOS/UserBundle
+    target=bundles/FOS/UserBundle
 ```
 
 Now, run the vendors script to download the bundle:
@@ -83,7 +83,7 @@ Add the `FOS` namespace to your autoloader:
 
 $loader->registerNamespaces(array(
     // ...
-    'FOS'              => __DIR__.'/../vendor/bundles',
+    'FOS' => __DIR__.'/../vendor/bundles',
 ));
 ```
 
@@ -130,11 +130,6 @@ Your `User` class can live inside any bundle in your application. For example,
 if you work at "Acme" company, then you might create a bundle called `AcmeUserBundle`
 and place your `User` class in it.
 
-``` bash
-# to run this command you must unregister the bundle (registered in step 3)
-$ php app/console generate:bundle --namespace=Acme/UserBundle
-```
-
 **Warning:**
 
 > If you override the __construct() method in your User class, be sure
@@ -142,11 +137,6 @@ $ php app/console generate:bundle --namespace=Acme/UserBundle
 > this to initialize some fields.
 
 **a) Doctrine ORM User class**
-
-``` bash
-# to run this command you must unregister the bundle (registered in step 3)
-$ php app/console generate:doctrine:entity --entity=AcmeUserBundle:User --no-interaction
-```
 
 If you're persisting your users via the Doctrine ORM, then your `User` class
 should live in the `Entity` namespace of your bundle and look like this to
@@ -182,16 +172,6 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 }
 
@@ -530,14 +510,6 @@ $ php app/console propel:build-model
 ```
 
 > To create SQL, run the command `propel:build-sql` and insert it or use migration commands if you have an existing schema in your database.
-
-**Creating a fresh user**
-
-``` bash
-$ php app/console fos:user:create me me@example.com secret
-```
-
-**Logging in**
 
 You now can login at `http://localhost/app_dev.php/login`!
 
