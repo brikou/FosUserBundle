@@ -11,7 +11,7 @@ in 2 ways.
 The first way to achieve it is to create a custom UserProvider wrapping the
 UserManager. The class will look like this:
 
-```php
+``` php
 <?php
 
 namespace Acme\UserBundle\Security\Provider;
@@ -35,7 +35,10 @@ class MyProvider implements UserProviderInterface
         $user = $this->userManager->findUserByUsernameOrEmail($username);
 
         if (!$user) {
-            throw new UsernameNotFoundException(sprintf('No user with name "%s" was found.', $username));
+            throw new UsernameNotFoundException(sprintf(
+                'No user with name "%s" was found.',
+                $username
+            ));
         }
 
         return $user;
@@ -57,10 +60,11 @@ You now need to register a new service for your provider:
 
 ```yaml
 # src/Acme/UserBundle/Resources/config/services.yml
+
 services:
     acme_user.my_provider:
-        class: Acme\UserBundle\Security\Provider\MyProvider
-        public: false
+        class:     Acme\UserBundle\Security\Provider\MyProvider
+        public:    false
         arguments: ["@fos_user.user_manager"]
 ```
 
@@ -69,6 +73,7 @@ provider instead of using the `fos_user.user_manager` service:
 
 ```yaml
 # app/config/security.yml
+
 security:
     providers:
         custom:
@@ -93,7 +98,7 @@ provided by the bundle. To do this, simply create a new class that extends
 the bundle's UserManager class and override the `loadUserByUsername` method.
 The class would look like this:
 
-```php
+``` php
 <?php
 
 namespace Acme\UserBundle\Model;
@@ -109,7 +114,10 @@ class MyUserManager extends UserManager
         $user = $this->findUserByUsernameOrEmail($username);
 
         if (!$user) {
-            throw new UsernameNotFoundException(sprintf('No user with name "%s" was found.', $username));
+            throw new UsernameNotFoundException(sprintf(
+                'No user with name "%s" was found.',
+                $username
+            ));
         }
 
         return $user;
@@ -123,7 +131,7 @@ Then register your user manager as a service:
 # src/Acme/UserBundle/Resources/config/services.yml
 services:
     acme_user.my_user_manager:
-        class: Acme\UserBundle\Model\MyUserManager
+        class:  Acme\UserBundle\Model\MyUserManager
         public: false
         parent: fos_user.user_manager.default
 ```
