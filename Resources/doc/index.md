@@ -299,22 +299,7 @@ security:
             anonymous:  true
 
     access_control:
-        -
-            path:  ^/login$
-            roles: IS_AUTHENTICATED_ANONYMOUSLY
-        -
-            path:  ^/register
-            roles: IS_AUTHENTICATED_ANONYMOUSLY
-        -
-            path:  ^/resetting
-            roles: IS_AUTHENTICATED_ANONYMOUSLY
-        -
-            path:  ^/admin/
-            roles: ROLE_ADMIN
-        #-
-        #    path:  ^/_internal
-        #    roles: IS_AUTHENTICATED_ANONYMOUSLY
-        #    ip:    127.0.0.1
+        - { path: ^/admin/, roles: ROLE_ADMIN }
 
 ```
 
